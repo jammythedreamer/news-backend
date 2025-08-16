@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import databaseConfig from './config/database.config';
 import { HealthModule } from './modules/health/health.module';
 import { NewsModule } from './modules/news/news.module';
+import { SeedModule } from './modules/seed/seed.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { NewsModule } from './modules/news/news.module';
     }),
     HealthModule,
     NewsModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
