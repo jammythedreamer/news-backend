@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import databaseConfig from './config/database.config';
 import { HealthModule } from './modules/health/health.module';
+import { NewsModule } from './modules/news/news.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { HealthModule } from './modules/health/health.module';
       inject: [ConfigService],
     }),
     HealthModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
