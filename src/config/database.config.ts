@@ -11,9 +11,12 @@ export default registerAs(
     password: process.env.DB_PASSWORD || 'news_password',
     database: process.env.DB_DATABASE || 'news_db',
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    migrations: [__dirname + '/../migrations/*{.ts,.js}'],
     synchronize: process.env.DB_SYNCHRONIZE === 'true',
     logging: process.env.DB_LOGGING === 'true',
     autoLoadEntities: true,
+    dropSchema: false,
+    migrationsRun: false,
     timezone: 'Z',
     charset: 'utf8mb4',
     extra: {
