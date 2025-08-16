@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from './category.entity';
+import { Keyword } from './keyword.entity';
 
 @Entity('news')
 @Index(['publishedAt'])
@@ -59,11 +60,20 @@ export class News {
   @ApiProperty({ description: '카테고리 목록', type: () => [Category] })
   @ManyToMany(() => Category, (category) => category.news, { cascade: true })
   @JoinTable({
-    name: 'news_categories',
+    name: 'news_category',
     joinColumn: { name: 'news_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
   })
   categories: Category[];
+
+  @ApiProperty({ description: '키워드 목록', type: () => [Keyword] })
+  @ManyToMany(() => Keyword, (keyword) => keyword.news, { cascade: true })
+  @JoinTable({
+    name: 'news_keyword',
+    joinColumn: { name: 'news_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'keyword_id', referencedColumnName: 'id' },
+  })
+  keywords: Keyword[];
 
   @ApiProperty({ description: '생성일', example: '2024-01-01T00:00:00Z' })
   @CreateDateColumn()
