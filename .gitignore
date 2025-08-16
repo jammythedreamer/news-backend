@@ -46,3 +46,8 @@ Thumbs.db
 # Build
 /.cache
 .parcel-cache
+
+# Environment variables
+.env
+.env.local
+.env.*.local

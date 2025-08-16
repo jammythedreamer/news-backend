@@ -1,5 +1,5 @@
 # Development Dockerfile - Hot reload enabled
-FROM node:20-alpine
+FROM node:22-alpine
 
 # pnpm 설치
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -7,10 +7,10 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 # 의존성 파일만 먼저 복사 (캐싱 활용)
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml* ./
 
-# 의존성 설치
-RUN pnpm install --frozen-lockfile
+# 의존성 설치 (개발 환경이므로 --frozen-lockfile 제거)
+RUN pnpm install
 
 # 소스 코드는 docker-compose의 volume mount로 처리
 # hot reload를 위해 코드는 복사하지 않음
@@ -18,5 +18,5 @@ RUN pnpm install --frozen-lockfile
 # 포트 노출
 EXPOSE 3000
 
-# 개발 서버 실행 (hot reload)
-CMD ["pnpm", "run", "start:dev"]
+# 개발 서버 실행 전에 재설치 체크 (volume mount로 인한 의존성 불일치 방지)
+CMD ["sh", "-c", "pnpm install && pnpm run start:dev"]
